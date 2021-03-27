@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     env:
       IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:inquid-optimized
-      BUILD_TAG: inquid/lemp
     steps:
       - uses: actions/checkout@v1
 
@@ -29,7 +28,7 @@ jobs:
 
       - name: Build the image
         run: |
-          docker build -t ${BUILD_TAG} .
+          docker build -t ${IMAGE_NAME} .
 
       - name: Push Docker image
         run: docker push ${IMAGE_NAME}

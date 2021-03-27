@@ -28,13 +28,8 @@ RUN \
     	   xz && \
        \        
        ## Locally Install Mongo Package
-       cd /usr/src/apk && \
        apk add -t .db-backup-mongo-deps --allow-untrusted \
-           mongodb-tools*.apk \
-           && \
-       \
-       rm -rf /var/cache/apk/* && \
-       rm -rf /usr/src/* 
+           mongodb-tools*.apk 
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

@@ -1,0 +1,38 @@
+name: Build Image
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+    env:
+      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:master
+      BUILD_TAG: inquid/lemp
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_email: ${{ secrets.GCP_SA_EMAIL }}
+          service_account_key: ${{ secrets.SERVICE_ACCOUNT_KEY }}
+          export_default_credentials: true
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker --quiet
+
+      - name: Build the image
+        run: |
+          docker build -t ${BUILD_TAG} ${IMAGE_NAME}
+
+      - name: Push Docker image
+        run: docker push ${IMAGE_NAME}

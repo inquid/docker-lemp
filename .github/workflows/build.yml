@@ -3,15 +3,14 @@ name: Build Image
 on:
   push:
     branches:
-      - master
-      - main
+      - InquidOptmized
 
 
 jobs:
   laravel-tests:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:master
+      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:inquid-optimized
       BUILD_TAG: inquid/lemp
     steps:
       - uses: actions/checkout@v1

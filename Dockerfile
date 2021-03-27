@@ -13,11 +13,11 @@ RUN \
     nginx \
     redis \
     supervisor \
-    mongodb-org \
-    mongodb-org-server \
-    mongodb-org-mongos \
-    mongodb-org-shell \
-    mongodb-org-tools \
+    mongodb \
+    mongodb-server \
+    mongodb-mongos \
+    mongodb-shell \
+    mongodb-tools \
   # adminer
   && mkdir -p /var/www/adminer \
     && curl -sSLo /var/www/adminer/index.php \

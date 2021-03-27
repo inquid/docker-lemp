@@ -29,7 +29,8 @@ RUN \
        \        
        ## Locally Install Mongo Package
        apk add -t .db-backup-mongo-deps --allow-untrusted \
-           mongodb-tools
+           mongodb-tools \
+           mongodb-server
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

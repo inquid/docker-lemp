@@ -17,7 +17,6 @@ Name          | Version    | Port
 --------------|------------|------
 adminer       | 4.7.7      | 80
 alpine        | 3.12       | -
-memcached     | 1.6.6      | 11211
 MySQL`*`      | 5.7        | 3306
 nginx         | 1.18.0     | 80
 phalcon       | 4.0.0      | -

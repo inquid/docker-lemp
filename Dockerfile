@@ -8,7 +8,6 @@ ENV \
 RUN \
   # install
   apk add -U --no-cache \
-    memcached \
     mysql mysql-client \
     nano \
     nginx \
@@ -30,7 +29,6 @@ COPY php/index.php /var/www/html/index.php
 
 # supervisor config
 COPY \
-  memcached/memcached.ini \
   mysql/mysqld.ini \
   nginx/nginx.ini \
   php/php-fpm.ini \
@@ -42,7 +40,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # ports
-EXPOSE 11211 9000 6379 3306 88 80
+EXPOSE 80 3306 9000 6379
 
 # commands
 ENTRYPOINT ["/docker-entrypoint.sh"]

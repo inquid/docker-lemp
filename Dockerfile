@@ -13,7 +13,6 @@ RUN \
     nginx \
     redis \
     supervisor \
-    mongodb \
     mongodb-server \
     mongodb-mongos \
     mongodb-shell \

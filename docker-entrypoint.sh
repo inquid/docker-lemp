@@ -3,9 +3,6 @@
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-1234567890}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:-123456}
 
-PGSQL_ROOT_PASSWORD=${PGSQL_ROOT_PASSWORD:-1234567890}
-PGSQL_PASSWORD=${PGSQL_PASSWORD:-123456}
-
 # init nginx
 if [ ! -d "/var/tmp/nginx/client_body" ]; then
   mkdir -p /run/nginx /var/tmp/nginx/client_body
@@ -43,33 +40,6 @@ if [ ! -f "/run/mysqld/.init" ]; then
 
   rm -rf ~/.mysql_history ~/.ash_history $SQL
   touch /run/mysqld/.init
-fi
-
-# init pgsql
-if [ ! -f /run/postgresql/.init ]; then
-  [[ "$PGSQL_USER" = "postgres" ]] && echo "Please set PGSQL_USER other than postgres" && exit 1
-
-  SQL=$(mktemp)
-
-  mkdir -p /run/postgresql /usr/local/pgsql/data
-  chown postgres:postgres -R /run/postgresql /usr/local/pgsql/data $SQL
-  su postgres -c "initdb -D /usr/local/pgsql/data"
-
-  PGSQL_DATABASE=${PGSQL_DATABASE:-test}
-  echo "CREATE DATABASE $PGSQL_DATABASE;" >> $SQL
-  echo "ALTER USER postgres PASSWORD '$PGSQL_ROOT_PASSWORD';" >> $SQL
-  if [ -n "$PGSQL_USER" ]; then
-    echo "CREATE USER $PGSQL_USER WITH ENCRYPTED PASSWORD '$PGSQL_PASSWORD';" >> $SQL
-    echo "GRANT ALL PRIVILEGES ON DATABASE $PGSQL_DATABASE TO $PGSQL_USER;" >> $SQL
-  fi
-  echo "GRANT ALL PRIVILEGES ON DATABASE $PGSQL_DATABASE TO postgres;" >> $SQL
-
-  su postgres -c "pg_ctl -D '/usr/local/pgsql/data' -o '-c listen_addresses='' -p ${PGSQL_PORT:-5432}' -w start"
-  su postgres -c "psql -f '$SQL'"
-  rm -rf ~/.psql_history ~/.ash_history $SQL
-  su postgres -c "pg_ctl -D '/usr/local/pgsql/data' -m fast -w stop"
-  sed -i -E 's/host\s+all(.*)trust/host    all\1password/' /usr/local/pgsql/data/pg_hba.conf
-  touch /run/postgresql/.init
 fi
 
 exec "$@"

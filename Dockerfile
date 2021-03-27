@@ -16,7 +16,6 @@ RUN \
     mysql mysql-client \
     nano \
     nginx \
-    postgresql \
     redis \
     supervisor \
   # elastic setup
@@ -54,7 +53,6 @@ COPY \
   memcached/memcached.ini \
   mysql/mysqld.ini \
   nginx/nginx.ini \
-  pgsql/postgres.ini \
   php/php-fpm.ini \
   redis/redis-server.ini \
     /etc/supervisor.d/
@@ -64,7 +62,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # ports
-EXPOSE 11300 11211 9300 9200 9000 6379 5432 3306 88 80
+EXPOSE 11300 11211 9300 9200 9000 6379 3306 88 80
 
 # commands
 ENTRYPOINT ["/docker-entrypoint.sh"]

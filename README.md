@@ -25,8 +25,6 @@ MySQL`*`      | 5.7        | 3306
 nginx         | 1.18.0     | 80
 phalcon       | 4.0.0      | -
 PHP           | 8.0.3      | 9000
-PostgreSQL    | 12.3       | 5432
-~rabbitmq~    | 3.8.*      | 5672
 redis         | 5.0.9      | 6379
 swoole        | 4.4.12     | -
 
@@ -52,13 +50,11 @@ docker run -p 8080:80 -p 8888:88 -v `pwd`:/var/www/html \
   -e MYSQL_ROOT_PASSWORD=1234567890 -e MYSQL_DATABASE=appdb \
   -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=123456 \
   --name lemp -d adhocore/lemp:8.0
-  # for postgres you can pass in similar env as for mysql but with PGSQL_ prefix
 ```
 
 After running container as above, you will be able to browse [localhost:8080](http://localhost:8080)!
 
-The database adminer will be available for [mysql](http://localhost:8080/adminer?server=127.0.0.1%3A3306&username=root)
-and [postgres](http://localhost:8080/adminer?pgsql=127.0.0.1%3A5432&username=postgres).
+The database adminer will be available for [mysql](http://localhost:8080/adminer?server=127.0.0.1%3A3306&username=root).
 
 The mailcatcher will be available at [localhost:8888](http://localhost:8888) which displays mails in realtime.
 
@@ -109,7 +105,6 @@ services:
       MYSQL_DATABASE: appdb
       MYSQL_USER: dbusr
       MYSQL_PASSWORD: securepwd
-      # for postgres you can pass in similar env as for mysql but with PGSQL_ prefix
 
 volumes:
   db_data: {}
@@ -133,12 +128,6 @@ Plus you can already set the volumes and ports there, so you dont have to type i
 - **root password**: 1234567890 (if `MYSQL_ROOT_PASSWORD` is not passed)
 - **user password**: 123456 (if `MYSQL_USER` is passed but `MYSQL_PASSWORD` is not)
 
-### PgSQL Default credentials
-
-- **postgres password**: 1234567890 (if `PGSQL_ROOT_PASSWORD` is not passed)
-- **user password**: 123456 (if `PGSQL_USER` is passed but `PGSQL_PASSWORD` is not)
-
-
 #### Accessing DB
 
 In PHP app you can access MySQL db via PDO like so:
@@ -147,15 +136,6 @@ $db = new PDO(
     'mysql:host=127.0.0.1;port=3306;dbname=' . getenv('MYSQL_DATABASE'),
     getenv('MYSQL_USER'),
     getenv('MYSQL_PASSWORD')
-);
-```
-
-You can access PgSQL db via PDO like so:
-```php
-$pdb = new PDO(
-    'pgsql:host=127.0.0.1;port=5432;dbname=' . getenv('PGSQL_DATABASE'),
-    getenv('PGSQL_USER'),
-    getenv('PGSQL_PASSWORD')
 );
 ```
 

@@ -13,16 +13,28 @@ RUN \
     nginx \
     redis \
     supervisor \
-    mongodb-server \
-    mongodb-mongos \
-    mongodb-shell \
-    mongodb-tools \
   # adminer
   && mkdir -p /var/www/adminer \
     && curl -sSLo /var/www/adminer/index.php \
       "https://github.com/vrana/adminer/releases/download/v$ADMINER_VERSION/adminer-$ADMINER_VERSION-en.php" \
   # cleanup
   && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
+  
+### Dependencies
+   RUN set -x && \
+       apk update && \
+       apk add \
+    	   bzip2 \
+    	   xz && \
+       \        
+       ## Locally Install Mongo Package
+       cd /usr/src/apk && \
+       apk add -t .db-backup-mongo-deps --allow-untrusted \
+           mongodb-tools*.apk \
+           && \
+       \
+       rm -rf /var/cache/apk/* && \
+       rm -rf /usr/src/* 
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

@@ -8,7 +8,6 @@ ENV \
 RUN \
   # install
   apk add -U --no-cache \
-    beanstalkd \
     memcached \
     mysql mysql-client \
     nano \
@@ -36,7 +35,6 @@ COPY php/index.php /var/www/html/index.php
 
 # supervisor config
 COPY \
-  beanstalkd/beanstalkd.ini \
   mail/mailcatcher.ini \
   memcached/memcached.ini \
   mysql/mysqld.ini \
@@ -50,7 +48,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # ports
-EXPOSE 11300 11211 9000 6379 3306 88 80
+EXPOSE 11211 9000 6379 3306 88 80
 
 # commands
 ENTRYPOINT ["/docker-entrypoint.sh"]

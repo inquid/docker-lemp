@@ -17,7 +17,6 @@ Name          | Version    | Port
 --------------|------------|------
 adminer       | 4.7.7      | 80
 alpine        | 3.12       | -
-beanstalkd    | 1.11       | 11300
 mailcatcher   | 0.7.1      | 88
 memcached     | 1.6.6      | 11211
 MySQL`*`      | 5.7        | 3306

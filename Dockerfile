@@ -3,29 +3,18 @@ FROM adhocore/phpfpm:8.0
 MAINTAINER Jitendra Adhikari <jiten.adhikary@gmail.com>
 
 ENV \
-  ADMINER_VERSION=4.7.8 \
-  ES_HOME=/usr/share/java/elasticsearch \
-  PATH=/usr/share/java/elasticsearch/bin:$PATH
+  ADMINER_VERSION=4.7.8
 
 RUN \
   # install
   apk add -U --no-cache \
     beanstalkd \
-    elasticsearch \
     memcached \
     mysql mysql-client \
     nano \
     nginx \
     redis \
     supervisor \
-  # elastic setup
-  && rm -rf $ES_HOME/plugins \
-    && mkdir -p $ES_HOME/tmp $ES_HOME/data $ES_HOME/logs $ES_HOME/plugins $ES_HOME/config/scripts \
-      && mv /etc/elasticsearch/* $ES_HOME/config/ \
-    # elastico user
-    && deluser elastico && addgroup -S elastico \
-      && adduser -D -S -h /usr/share/java/elasticsearch -s /bin/ash -G elastico elastico \
-      && chown elastico:elastico -R $ES_HOME \
   # adminer
   && mkdir -p /var/www/adminer \
     && curl -sSLo /var/www/adminer/index.php \
@@ -48,7 +37,6 @@ COPY php/index.php /var/www/html/index.php
 # supervisor config
 COPY \
   beanstalkd/beanstalkd.ini \
-  elastic/elasticsearch.ini \
   mail/mailcatcher.ini \
   memcached/memcached.ini \
   mysql/mysqld.ini \
@@ -62,7 +50,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # ports
-EXPOSE 11300 11211 9300 9200 9000 6379 3306 88 80
+EXPOSE 11300 11211 9000 6379 3306 88 80
 
 # commands
 ENTRYPOINT ["/docker-entrypoint.sh"]

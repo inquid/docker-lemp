@@ -31,9 +31,7 @@ RUN \
     RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories
     RUN apk update
     RUN apk add mongodb \
-                mongodb-tools \
-                mongodb-shell \
-                mongodb-server
+                mongodb-tools
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

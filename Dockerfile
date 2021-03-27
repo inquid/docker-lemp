@@ -25,11 +25,7 @@ RUN \
        apk update && \
        apk add \
     	   bzip2 \
-    	   xz && \
-       \        
-       ## Locally Install Mongo Package
-       apk add -t .db-backup-mongo-deps --allow-untrusted \
-           mongodb-tools
+    	   xz
            
     RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/main' >> /etc/apk/repositories
     RUN echo 'http://dl-cdn.alpinelinux.org/alpine/v3.6/community' >> /etc/apk/repositories

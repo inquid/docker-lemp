@@ -5,10 +5,10 @@ on:
 
 
 jobs:
-  laravel-tests:
+  build-docker-image:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:inquid-optimized
+      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:${{ env.GITHUB_REF_NAME_SLUG }}
     steps:
       - uses: actions/checkout@v1
 

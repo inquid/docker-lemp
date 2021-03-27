@@ -89,6 +89,9 @@ services:
     # For different app you can use different names. (eg: )
     container_name: some-app
     volumes:
+      # app source code
+      - ./path/to/your/app:/var/www/html
+      # db data persistence
       - db_data:/var/lib/mysql
       # Here you can also volume php ini settings
       # - /path/to/zz-overrides:/usr/local/etc/php/conf.d/zz-overrides.ini

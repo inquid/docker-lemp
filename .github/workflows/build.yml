@@ -29,7 +29,7 @@ jobs:
 
       - name: Build the image
         run: |
-          docker build -t ${BUILD_TAG} ${IMAGE_NAME}
+          docker build -t ${BUILD_TAG} .
 
       - name: Push Docker image
         run: docker push ${IMAGE_NAME}

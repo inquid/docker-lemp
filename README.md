@@ -17,7 +17,6 @@ Name          | Version    | Port
 --------------|------------|------
 adminer       | 4.7.7      | 80
 alpine        | 3.12       | -
-mailcatcher   | 0.7.1      | 88
 memcached     | 1.6.6      | 11211
 MySQL`*`      | 5.7        | 3306
 nginx         | 1.18.0     | 80
@@ -53,8 +52,6 @@ docker run -p 8080:80 -p 8888:88 -v `pwd`:/var/www/html \
 After running container as above, you will be able to browse [localhost:8080](http://localhost:8080)!
 
 The database adminer will be available for [mysql](http://localhost:8080/adminer?server=127.0.0.1%3A3306&username=root).
-
-The mailcatcher will be available at [localhost:8888](http://localhost:8888) which displays mails in realtime.
 
 ### Stop container
 
@@ -146,21 +143,3 @@ Either your app has `public/` folder or not, the rewrite adapts automatically.
 ### PHP
 
 For available extensions, check [adhocore/phpfpm#extension](https://github.com/adhocore/docker-phpfpm/tree/8.0b#extensions).
-
-### Testing mailcatcher
-
-```sh
-# open shell
-docker exec -it lemp sh
-
-# send test mail
-echo "\n" | sendmail -S 0 test@localhost
-```
-
-Then you will see the new mail in realtime at http://localhost:8888.
-
-Or you can check it in shell as well:
-```sh
-
-curl 0:88/messages
-```

@@ -42,4 +42,7 @@ if [ ! -f "/run/mysqld/.init" ]; then
   touch /run/mysqld/.init
 fi
 
+mongo < /data/admin.js
+mongod --auth --port 27017 --dbpath /data/db
+
 exec "$@"

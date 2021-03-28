@@ -42,7 +42,7 @@ if [ ! -f "/run/mysqld/.init" ]; then
   touch /run/mysqld/.init
 fi
 
-mongod --dbpath /data/db run
-mongo < /data/admin.js
+# mongod --dbpath /data/db run
+# mongo < /data/admin.js
 
 exec "$@"

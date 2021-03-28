@@ -35,6 +35,7 @@ RUN \
 
 # create mongodb directory
 RUN mkdir -p /data/db
+COPY mongo/admin.js /data/admin.js
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

@@ -20,7 +20,7 @@ RUN \
   # cleanup
   && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
   
-### Dependencies
+### MongoDB
    RUN set -x && \
        apk update && \
        apk add \
@@ -32,6 +32,9 @@ RUN \
     RUN apk update
     RUN apk add mongodb \
                 mongodb-tools
+
+# create mongodb directory
+RUN mkdir -p /data/db
 
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf

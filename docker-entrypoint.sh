@@ -45,4 +45,7 @@ fi
 mongod --dbpath /data/db run &
 mongo < /data/admin.js
 
+cd /var/www/html
+# composer update --ignore-platform-reqs
+
 exec "$@"

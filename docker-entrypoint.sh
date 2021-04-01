@@ -61,6 +61,7 @@ db.createUser(
 mongod --dbpath /data/db run &
 mongopid
 
+# Wait for the mongo server to come up
 sleep 25
 
 mongo < /data/admin.js

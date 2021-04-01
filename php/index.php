@@ -37,8 +37,8 @@ echo PHP_SAPI === 'cli'
         . ' | Adminer: <a href="/adminer?server=127.0.0.1%3A3306&username=root" target="_blank">mysql</a>, '
         . "\n";
 
-$user = getenv('MONGODB_USER') ?: 'root';
-$pass = getenv('MONGODB_PASSWORD') ?: '1234567890';
+$user = getenv('MONGODB_USER') ?: 'admin';
+$pass = getenv('MONGODB_PASSWORD') ?: '123456';
 
 // MongoDB
 $client = new MongoDB\Client("mongodb://${user}:${pass}@localhost:27017");

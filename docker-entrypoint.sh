@@ -50,13 +50,13 @@ db.createUser(
   {
     user: \"$MONGODB_USER\",
     pwd: \"$MONGODB_PASSWORD\",
-    roles: [ { role: \"userAdminAnyDatabase\", db: \"admin\" } ]
+    roles: [ { roles: [\"userAdminAnyDatabase\", \"dbAdminAnyDatabase\", \"readWriteAnyDatabase\"], db: \"admin\" } ]
   }
 )" > /data/admin.js;
 mongod --dbpath /data/db run &
 mongo < /data/admin.js
 
 cd /var/www/html
-# composer update --ignore-platform-reqs
+composer install --ignore-platform-reqs
 
 exec "$@"

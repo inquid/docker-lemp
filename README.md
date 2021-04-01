@@ -151,8 +151,8 @@ For available extensions, check [adhocore/phpfpm#extension](https://github.com/a
 
 ### MongoDB Default credentials
 
-- **root password**: 1234567890 (if `MYSQL_ROOT_PASSWORD` is not passed)
-- **user password**: 123456 (if `MYSQL_USER` is passed but `MYSQL_PASSWORD` is not)
+- **user**: admin (if `MONGODB_USER` is not passed)
+- **password**: 123456 (if `MONGODB_PASSWORD` is not passed)
 
 #### Accessing MongoDB
 

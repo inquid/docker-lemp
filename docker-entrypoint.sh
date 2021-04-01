@@ -61,6 +61,8 @@ db.createUser(
 mongod --dbpath /data/db run &
 mongopid
 
+sleep 25
+
 mongo < /data/admin.js
 
 cd /var/www/html

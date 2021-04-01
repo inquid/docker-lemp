@@ -45,4 +45,4 @@ $client = new MongoDB\Client("mongodb://${user}:${pass}@localhost:27017");
 $collection = $client->demo->beers;
 $result = $collection->insertOne(['name' => 'Hinterland', 'brewery' => 'BrewDog']);
 
-echo "Inserted with Object ID '{$result->getInsertedId()}'";
+echo "Mongo record inserted with Object ID '{$result->getInsertedId()}'";

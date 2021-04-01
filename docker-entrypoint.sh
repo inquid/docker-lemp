@@ -58,7 +58,7 @@ db.createUser(
                 ]
           }
 )" > /data/admin.js;
-mongod --dbpath /data/db run &
+mongod --dbpath /data/db run
 mongo < /data/admin.js
 
 cd /var/www/html

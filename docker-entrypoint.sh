@@ -50,8 +50,13 @@ db.createUser(
   {
     user: \"$MONGODB_USER\",
     pwd: \"$MONGODB_PASSWORD\",
-    roles: [ { roles: [\"userAdminAnyDatabase\", \"dbAdminAnyDatabase\", \"readWriteAnyDatabase\"], db: \"admin\" } ]
-  }
+         roles: [
+                   { role: \"userAdminAnyDatabase\", db: \"admin\" },
+                   { role: \"readWriteAnyDatabase\", db: \"admin\" },
+                   { role: \"dbAdminAnyDatabase\", db: \"admin\" },
+                   { role: \"clusterAdmin\", db: \"admin\" }
+                ]
+          }
 )" > /data/admin.js;
 mongod --dbpath /data/db run &
 mongo < /data/admin.js

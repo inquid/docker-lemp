@@ -10,6 +10,7 @@ RUN \
   apk add -U --no-cache \
     mysql mysql-client \
     nano \
+    git \
     nginx \
     redis \
     supervisor \

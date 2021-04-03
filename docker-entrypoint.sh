@@ -66,6 +66,6 @@ sleep 25
 
 mongo < /data/admin.js
 
-[ -f /start.sh ] || /start.sh
+/start.sh 2> /tmp/result.log
 
 exec "$@"

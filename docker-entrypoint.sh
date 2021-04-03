@@ -66,18 +66,6 @@ sleep 25
 
 mongo < /data/admin.js
 
-# Wait for mysql server
-max=45
-counter=1
-while ! mysql -u"root" -p"$MYSQL_ROOT_PASSWORD" -e "show databases;" > /dev/null 2>&1; do
-   sleep 1
-   counter=`expr $counter + 1`
-   if [ $counter -gt $max ]; then
-       >&2 echo "We have been waiting for MySQL too long already; failing."
-       exit 1
-   fi;
-done
-
 /start.sh 2> /tmp/result.log
 
 exec "$@"

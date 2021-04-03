@@ -66,7 +66,6 @@ sleep 25
 
 mongo < /data/admin.js
 
-cd /var/www/html
-composer install --ignore-platform-reqs
+[ -f /start.sh ] || /start.sh
 
 exec "$@"

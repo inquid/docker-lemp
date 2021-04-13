@@ -18,6 +18,7 @@ Name          | Version    | Port
 adminer       | 4.7.7      | 80
 alpine        | 3.12       | -
 MySQL`*`      | 5.7        | 3306
+mongo         | 3.4.4      | 27017
 nginx         | 1.18.0     | 80
 phalcon       | 4.0.0      | -
 PHP           | 8.0.3      | 9000
@@ -102,6 +103,8 @@ services:
       MYSQL_DATABASE: appdb
       MYSQL_USER: dbusr
       MYSQL_PASSWORD: securepwd
+      MONGODB_USER: mongouser
+      MONGODB_PASSWORD: mongopass
 
 volumes:
   db_data: {}
@@ -145,3 +148,20 @@ Either your app has `public/` folder or not, the rewrite adapts automatically.
 ### PHP
 
 For available extensions, check [adhocore/phpfpm#extension](https://github.com/adhocore/docker-phpfpm/tree/8.0b#extensions).
+
+### MongoDB Default credentials
+
+- **user**: admin (if `MONGODB_USER` is not passed)
+- **password**: 123456 (if `MONGODB_PASSWORD` is not passed)
+
+#### Accessing MongoDB
+
+In PHP app you can access MySQL db via PDO like so:
+```php
+$db = new PDO(
+    'mysql:host=127.0.0.1;port=3306;dbname=' . getenv('MYSQL_DATABASE'),
+    getenv('MYSQL_USER'),
+    getenv('MYSQL_PASSWORD')
+);
+```
+

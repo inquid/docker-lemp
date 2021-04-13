@@ -3,6 +3,9 @@
 MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-1234567890}
 MYSQL_PASSWORD=${MYSQL_PASSWORD:-123456}
 
+MONGODB_USER=${MONGODB_USER:-admin}
+MONGODB_PASSWORD=${MONGODB_PASSWORD:-123456}
+
 # init nginx
 if [ ! -d "/var/tmp/nginx/client_body" ]; then
   mkdir -p /run/nginx /var/tmp/nginx/client_body
@@ -41,5 +44,28 @@ if [ ! -f "/run/mysqld/.init" ]; then
   rm -rf ~/.mysql_history ~/.ash_history $SQL
   touch /run/mysqld/.init
 fi
+
+echo "use admin
+db.createUser(
+  {
+    user: \"$MONGODB_USER\",
+    pwd: \"$MONGODB_PASSWORD\",
+         roles: [
+                   { role: \"userAdminAnyDatabase\", db: \"admin\" },
+                   { role: \"readWriteAnyDatabase\", db: \"admin\" },
+                   { role: \"dbAdminAnyDatabase\", db: \"admin\" },
+                   { role: \"clusterAdmin\", db: \"admin\" }
+                ]
+          }
+)" > /data/admin.js;
+mongod --dbpath /data/db run &
+mongopid
+
+# Wait for the mongo server to come up
+sleep 25
+
+mongo < /data/admin.js
+
+/start.sh 2> /tmp/result.log
 
 exec "$@"

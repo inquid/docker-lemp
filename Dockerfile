@@ -2,8 +2,8 @@ FROM adhocore/phpfpm:8.0
 
 MAINTAINER Jitendra Adhikari <jiten.adhikary@gmail.com>
 
-ENV \
-  ADMINER_VERSION=4.7.8
+ENV ADMINER_VERSION=4.7.8
+ENV ALPINE_VERSION=3.6
 
 RUN \
   # install
@@ -21,12 +21,28 @@ RUN \
   # cleanup
   && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* /usr/share/doc/* /usr/share/man/*
 
+### MongoDB
+   RUN set -x && \
+       apk update && \
+       apk add \
+    	   bzip2 \
+    	   xz
+
+    RUN echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/main" >> /etc/apk/repositories
+    RUN echo "http://dl-cdn.alpinelinux.org/alpine/v$ALPINE_VERSION/community" >> /etc/apk/repositories
+    RUN apk update
+    RUN apk add mongodb \
+                mongodb-tools
+
+# create mongodb directory
+RUN mkdir -p /data/db
+
 # nginx config
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 COPY nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 
 # resource
-COPY php/index.php /var/www/html/index.php
+COPY php/* /var/www/html/
 
 # supervisor config
 COPY \
@@ -41,7 +57,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
 
 # ports
-EXPOSE 80 3306 9000 6379
+EXPOSE 80 3306 9000 6379 27017
 
 # commands
 ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -22,6 +22,7 @@ mongo         | 3.4.4      | 27017
 nginx         | 1.18.0     | 80
 phalcon       | 4.0.0      | -
 PHP           | 8.0.3      | 9000
+node          |            |
 redis         | 5.0.9      | 6379
 swoole        | 4.4.12     | -
 

@@ -14,6 +14,8 @@ RUN \
     nginx \
     redis \
     supervisor \
+    nodejs \
+    npm \
   # adminer
   && mkdir -p /var/www/adminer \
     && curl -sSLo /var/www/adminer/index.php \
@@ -51,6 +53,18 @@ COPY \
   php/php-fpm.ini \
   redis/redis-server.ini \
     /etc/supervisor.d/
+
+
+# setup npm
+RUN npm install -g npm@latest
+
+RUN npm install
+
+# include your other npm run scripts e.g npm rebuild node-sass
+
+# run your default build command here mine is npm run prod
+RUN npm run prod
+
 
 # entrypoint
 COPY docker-entrypoint.sh /docker-entrypoint.sh

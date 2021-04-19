@@ -1,10 +1,4 @@
-## docker-lemp
-
-> Do not use this LEMP in Production.
-> For production, use [adhocore/phpfpm](https://github.com/adhocore/docker-phpfpm)
-> then [compose](https://docs.docker.com/compose/install/) a stack using individual `nginx`, `redis`, `mysql` etc images.
-
-[`adhocore/lemp`](https://hub.docker.com/r/adhocore/lemp) is a minimal single container LEMP full stack for local development.
+## docker-lemp Optimized for Inquid stack
 
 > If you want to use PHP7.4 on LEMP stack then head over to
 [`adhocore/lemp:7.4`](https://github.com/adhocore/docker-lemp/tree/7.4).
@@ -145,3 +139,10 @@ Either your app has `public/` folder or not, the rewrite adapts automatically.
 ### PHP
 
 For available extensions, check [adhocore/phpfpm#extension](https://github.com/adhocore/docker-phpfpm/tree/8.0b#extensions).
+
+### USE IN PRODUCTION
+> Do not use this LEMP in Production.
+> For production, use [adhocore/phpfpm](https://github.com/adhocore/docker-phpfpm)
+> then [compose](https://docs.docker.com/compose/install/) a stack using individual `nginx`, `redis`, `mysql` etc images.
+
+[`adhocore/lemp`](https://hub.docker.com/r/adhocore/lemp) is a minimal single container LEMP full stack for local development.

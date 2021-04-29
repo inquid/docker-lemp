@@ -8,7 +8,7 @@ jobs:
   build-docker-image:
     runs-on: ubuntu-latest
     env:
-      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:inquid-full-php-8
+      IMAGE_NAME: ${{ secrets.GCP_LOCATION }}/${{ secrets.GCP_PROJECT_ID }}/${{ secrets.GCP_APP_NAME }}:inquid-full-php-8-with-python
     steps:
       - uses: actions/checkout@v1
 

@@ -3,6 +3,9 @@
 $works = "<p>If you see this, that means it works!</p>\n\n";
 echo PHP_SAPI == 'cli' ? strip_tags($works) : $works;
 
+// Python
+echo exec('python -v');
+
 $mdb = new PDO(
     'mysql:host=127.0.0.1;port=3306;dbname=' . (getenv('MYSQL_DATABASE') ?: 'test'),
     getenv('MYSQL_USER') ?: 'root',

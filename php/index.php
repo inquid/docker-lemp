@@ -2,7 +2,7 @@
 
 $works = "<p>If you see this, that means it works!</p>\n\n";
 
-$output = shell_exec("java -version 2>&1");
+echo shell_exec("java -version 2>&1");
 
 echo PHP_SAPI == 'cli' ? strip_tags($works) : $works;
 

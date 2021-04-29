@@ -1,6 +1,9 @@
 <?php
 
 $works = "<p>If you see this, that means it works!</p>\n\n";
+
+$output = shell_exec("java -version 2>&1");
+
 echo PHP_SAPI == 'cli' ? strip_tags($works) : $works;
 
 $mdb = new PDO(
@@ -37,7 +40,7 @@ foreach (array_chunk($extensions, 4) as $exts) {
 echo PHP_SAPI === 'cli'
     ? "\nSource code: https://github.com/adhocore/docker-lemp\n\n"
     : "</pre>\n\n"
-        . 'Source code: <a href="https://github.com/adhocore/docker-lemp" target="_blank">adhocore/docker-lemp</a>'
-        . ' | Adminer: <a href="/adminer?server=127.0.0.1%3A3306&username=root" target="_blank">mysql</a>, '
-        . ' <a href="/adminer?pgsql=127.0.0.1%3A5432&username=postgres" target="_blank">postgres</a>'
-        . "\n";
+    . 'Source code: <a href="https://github.com/adhocore/docker-lemp" target="_blank">adhocore/docker-lemp</a>'
+    . ' | Adminer: <a href="/adminer?server=127.0.0.1%3A3306&username=root" target="_blank">mysql</a>, '
+    . ' <a href="/adminer?pgsql=127.0.0.1%3A5432&username=postgres" target="_blank">postgres</a>'
+    . "\n";

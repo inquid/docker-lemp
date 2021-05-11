@@ -1,4 +1,4 @@
-FROM adhocore/phpfpm:8.0
+FROM gcr.io/inquid-deploy-8943948n/inquid-php:inquid-php-8
 
 MAINTAINER Jitendra Adhikari <jiten.adhikary@gmail.com>
 

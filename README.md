@@ -1,36 +1,45 @@
 ## docker-lemp
 
+![Docker Build](https://img.shields.io/docker/cloud/build/adhocore/lemp?style=flat-square)
+[![Donate 15](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square&label=donate+15)](https://www.paypal.me/ji10/15usd)
+[![Donate 25](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square&label=donate+25)](https://www.paypal.me/ji10/25usd)
+[![Donate 50](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square&label=donate+50)](https://www.paypal.me/ji10/50usd)
+[![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Complete+LEMP+fullstack+for+local+development+using+docker&url=https://github.com/adhocore/docker-lemp&hashtags=docker,lemp,fullstack,localdev)
+
+
 > Do not use this LEMP in Production.
 > For production, use [adhocore/phpfpm](https://github.com/adhocore/docker-phpfpm)
 > then [compose](https://docs.docker.com/compose/install/) a stack using individual `nginx`, `redis`, `mysql` etc images.
 
 [`adhocore/lemp`](https://hub.docker.com/r/adhocore/lemp) is a minimal single container LEMP full stack for local development.
 
-> If you want to use PHP7.4 on LEMP stack then head over to
-[`adhocore/lemp:7.4`](https://github.com/adhocore/docker-lemp/tree/7.4).
+> If you want to use PHP7.4 on LEMP stack then head over to [`adhocore/lemp:7.4`](7.4.Dockerfile).
 
 It is quick jumpstart for onboarding you into docker based development.
+The download size is just about ~360MB which is tiny considering how much tools and stuffs it contains.
 
 The docker container `adhocore/lemp` is composed of:
 
 Name          | Version    | Port
 --------------|------------|------
-adminer       | 4.7.8      | 80
+adminer       | 4.8.1      | 80
 alpine        | 3.12       | -
 beanstalkd    | 1.11       | 11300
-elasticsearch | 6.4.3      | 9200,9300
+elasticsearch`*` | 6.4.3      | 9200,9300
 mailcatcher   | 0.7.1      | 88
 memcached     | 1.6.6      | 11211
-MySQL`*`      | 5.7        | 3306
+MySQL`**`     | 5.7        | 3306
 nginx         | 1.18.0     | 80
 phalcon       | 4.0.0      | -
-PHP           | 8.0.3      | 9000
-PostgreSQL    | 12.3       | 5432
+PHP8.0        | 8.0.12     | 9000
+PHP7.4        | 7.4.25     | 9000
+PostgreSQL    | 12.6       | 5432
 ~rabbitmq~    | 3.8.*      | 5672
-redis         | 5.0.9      | 6379
-swoole        | 4.4.12     | -
+redis         | 5.0.11     | 6379
+swoole        | 4.5.9      | -
 
-> `*`: It is actually MariaDB 10.4.17.
+> `*`: Latest versions of alpine (3.13+) seems to have removed `elasticsearch` binary!
+> `**`: It is actually MariaDB 10.4.17.
 
 ## Usage
 
@@ -40,6 +49,9 @@ Also recommended to install [docker-compose](https://docs.docker.com/compose/ins
 ```sh
 # pull latest image
 docker pull adhocore/lemp:8.0
+
+# or if you use php 7.4, replace 8.0 with 7.4:
+docker pull adhocore/lemp:7.4
 
 # Go to your project root then run
 docker run -p 8080:80 -p 8888:88 -v `pwd`:/var/www/html --name lemp -d adhocore/lemp:8.0
@@ -171,6 +183,25 @@ Either your app has `public/` folder or not, the rewrite adapts automatically.
 ### PHP
 
 For available extensions, check [adhocore/phpfpm#extension](https://github.com/adhocore/docker-phpfpm/tree/8.0#extensions).
+
+### Disabling services
+
+[Pass in env var](https://www.cloudsavvyit.com/14081/how-to-pass-environment-variables-to-docker-containers/)
+`DISABLE` to the container in CSV format to disable services.
+The service names must be one or more of below in comma separated format:
+```
+beanstalkd
+mailcatcher
+memcached
+mysql
+pgsql
+redis
+```
+
+> Example: `DISABLE=beanstalkd,mailcatcher,memcached,pgsql,redis`
+> Essential services like `nginx`, `php`, `adminer` cannot be disabled ;).
+
+The service(s) will be enabled again if you run the container next time without `DISABLE` env or if you remove specific services from `DISABLE` CSV.
 
 ### Testing mailcatcher
 

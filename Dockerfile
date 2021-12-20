@@ -3,7 +3,7 @@ FROM adhocore/phpfpm:8.0
 MAINTAINER Jitendra Adhikari <jiten.adhikary@gmail.com>
 
 ENV \
-  ADMINER_VERSION=4.7.8 \
+  ADMINER_VERSION=4.8.1 \
   ES_HOME=/usr/share/java/elasticsearch \
   PATH=/usr/share/java/elasticsearch/bin:$PATH
 
@@ -11,7 +11,7 @@ RUN \
   # install
   apk add -U --no-cache \
     beanstalkd \
-    elasticsearch \
+    # elasticsearch \
     memcached \
     mysql mysql-client \
     nano \
@@ -20,13 +20,13 @@ RUN \
     redis \
     supervisor \
   # elastic setup
-  && rm -rf $ES_HOME/plugins \
-    && mkdir -p $ES_HOME/tmp $ES_HOME/data $ES_HOME/logs $ES_HOME/plugins $ES_HOME/config/scripts \
-      && mv /etc/elasticsearch/* $ES_HOME/config/ \
-    # elastico user
-    && deluser elastico && addgroup -S elastico \
-      && adduser -D -S -h /usr/share/java/elasticsearch -s /bin/ash -G elastico elastico \
-      && chown elastico:elastico -R $ES_HOME \
+  # && rm -rf $ES_HOME/plugins \
+  #   && mkdir -p $ES_HOME/tmp $ES_HOME/data $ES_HOME/logs $ES_HOME/plugins $ES_HOME/config/scripts \
+  #     && mv /etc/elasticsearch/* $ES_HOME/config/ \
+  #   # elastico user
+  #   && deluser elastico && addgroup -S elastico \
+  #     && adduser -D -S -h /usr/share/java/elasticsearch -s /bin/ash -G elastico elastico \
+  #     && chown elastico:elastico -R $ES_HOME \
   # rabbitmq
   # && echo @testing http://nl.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories \
     # && apk add -U rabbitmq-server@testing \
@@ -53,15 +53,15 @@ COPY php/index.php /var/www/html/index.php
 # supervisor config
 COPY \
   beanstalkd/beanstalkd.ini \
-  elastic/elasticsearch.ini \
-  mail/mailcatcher.ini \
+  # elasticsearch/elasticsearch.ini \
+  mailcatcher/mailcatcher.ini \
   memcached/memcached.ini \
-  mysql/mysqld.ini \
+  mysql/mysql.ini \
   nginx/nginx.ini \
-  pgsql/postgres.ini \
+  pgsql/pgsql.ini \
   php/php-fpm.ini \
-  # rabbitmq/rabbitmq-server.ini \
-  redis/redis-server.ini \
+  # rabbitmq/rabbitmq.ini \
+  redis/redis.ini \
     /etc/supervisor.d/
 
 # entrypoint
